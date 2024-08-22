@@ -24,7 +24,9 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install @types/node --save-dev  # Ensure @types/node is installed
+          npm install @actions/core @actions/github --save
+          npm install @types/node --save-dev
+
 
       - name: Build action
         run: npm run build
