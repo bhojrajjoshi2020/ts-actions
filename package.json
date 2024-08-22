@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "build": "tsc" // Adjust this to your build process
+    "build": "tsc"
   }
 }
