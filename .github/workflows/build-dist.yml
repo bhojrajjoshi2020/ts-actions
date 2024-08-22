@@ -3,10 +3,10 @@ name: Build and Commit dist
 on:
   push:
     branches:
-      - main # Change this to the branch you want to trigger the build on
+      - main
   pull_request:
     branches:
-      - main # Change this to the branch you want to trigger the build on
+      - main
 
 jobs:
   build:
@@ -19,13 +19,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Specify your Node.js version
+          node-version: '18'  # Specify the Node.js version you're using
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install @types/node --save-dev  # Ensure @types/node is installed
 
       - name: Build action
-        run: npm run build # Ensure this script creates the dist/index.js file
+        run: npm run build
+
+      - name: Verify dist exists
+        run: ls -la dist/
 
       - name: Commit changes
         run: |
@@ -33,7 +38,7 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add dist/
           git commit -m "Build: Update dist on push"
-        continue-on-error: true # If there are no changes, don't fail the workflow
+        continue-on-error: true
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
